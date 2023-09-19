@@ -3,7 +3,10 @@ import { createClient } from 'redis'
 
 const app = express()
 
-const client = createClient()
+const client = createClient({
+  host: 'redis-server',
+  port: 6379,
+})
 client.set('visits', 0)
 
 app.get('/', (req, res, next) => {
