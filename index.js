@@ -4,14 +4,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const redis_1 = __importDefault(require("redis"));
+const redis_1 = require("redis");
 const app = (0, express_1.default)();
-const client = redis_1.default.createClient();
+const client = (0, redis_1.createClient)({
+    url: 'redis-server:6379',
+});
 client.set('visits', 0);
 app.get('/', (req, res, next) => {
-    client.get('visits', (err, visits) => {
+    client.get('visits').then(visits => {
         res.send('Number of visits is' + visits);
-        client.set('visits', parseInt(visits + 1));
+        if (visits) {
+            client.set('visits', parseInt(visits + 1));
+        }
     });
 });
 app.listen(8081, () => {
