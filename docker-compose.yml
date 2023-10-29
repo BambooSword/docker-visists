@@ -4,5 +4,6 @@ services:
     image: redis
   node-app:
     build: .
+    restart: always
     ports:
       - '5081:8081'
