@@ -10,5 +10,5 @@ COPY package.json .
 RUN pnpm install
 
 COPY . .
-
-CMD pnpm compile && pnpm start
+RUN pnpm compile
+CMD pnpm start
